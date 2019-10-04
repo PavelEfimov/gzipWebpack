@@ -1,44 +1,20 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-import List from './List';
+import { file } from '../sources/file';
 
-import {getList} from '../sources/list';
+import { saveFile } from '../utils';
 
-class App extends Component {
-    constructor(props) {
-        super(props);
+const App =  () => {
 
-        this.state = {
-            list: [],
-            count: 6
-        };
-    }
+    const onClick = () => {
+        file().then(({ data }) => saveFile('plan.docx', data));
+    };
 
-    componentDidMount() {
-        // console.log('before');
-        // console.log('after');
-        // setTimeout(() => console.log('here'), 0);
-
-        // const { count } = this.state;
-
-        // const params = { count };
-        console.log('PROMISE: ', getList());
-
-        getList({ count: this.state.count })
-            .then(({ data }) => this.setState({ list: data }));
-    }
-
-    render() {
-        const { list } = this.state;
-
-        return (
-            <div>
-                <h3>ddd</h3>
-                <List list={list}/>
-                {/*TODO рендер компонента здесь*/}
-            </div>
-        );
-    }
-}
+    return (
+        <div>
+            <button onClick={onClick}>Загрузить файл</button>
+        </div>
+    );
+};
 
 export default App;
